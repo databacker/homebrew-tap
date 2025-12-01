@@ -4,7 +4,7 @@ Thank you for your interest in contributing to the mysql-backup Homebrew tap!
 
 ## Formula Updates
 
-When updating the mysql-backup formula, use the provided script:
+When updating the mysql-backup formula, use the provided script `./scripts/update-formula.sh` to automate the process. For example, to updated to version `v1.2.3`, run:
 
 ```bash
 ./scripts/update-formula.sh v1.2.3
