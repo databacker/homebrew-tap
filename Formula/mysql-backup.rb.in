@@ -1,0 +1,51 @@
+class MysqlBackup < Formula
+  desc "Automated backups of mysql databases"
+  homepage "https://github.com/databacker/mysql-backup"
+  license "Apache 2.0"
+
+  # HEAD: build from source
+  head do
+    url "https://github.com/databacker/mysql-backup.git", branch: "master"
+    depends_on "go" => :build
+  end
+
+  # Default: use pre-built binary
+  on_macos do
+    on_arm do
+      url "ASSET_DARWIN_ARM64"
+      sha256 "SHA256_DARWIN_ARM64"
+    end
+    on_intel do
+      url "ASSET_DARWIN_AMD64"
+      sha256 "SHA256_DARWIN_AMD64"
+    end
+  end
+  on_linux do
+    on_arm do
+      url "ASSET_LINUX_ARM64"
+      sha256 "SHA256_LINUX_ARM64"
+    end
+    on_intel do
+      url "ASSET_LINUX_AMD64"
+      sha256 "SHA256_LINUX_AMD64"
+    end
+  end
+
+  def install
+    if build.head?
+      # Build from source for HEAD
+      system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/mysql-backup"
+    else
+      # Install pre-built binary
+      arch_binary = Dir["mysql-backup-*"].first
+      raise "Binary not found!" unless arch_binary
+
+      mv arch_binary, "mysql-backup"
+      bin.install "mysql-backup"
+    end
+  end
+
+  test do
+    system "#{bin}/mysql-backup", "--version"
+  end
+end
