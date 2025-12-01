@@ -1,10 +1,13 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://docs.brew.sh/rubydoc/Formula
-# PLEASE REMOVE ALL GENERATED COMMENTS BEFORE SUBMITTING YOUR PULL REQUEST!
 class MysqlBackup < Formula
-  desc "automated backups of mysql databases"
+  desc "Automated backups of mysql databases"
   homepage "https://github.com/databacker/mysql-backup"
   license "MIT"
+
+  # HEAD: build from source
+  head do
+    url "https://github.com/databacker/mysql-backup.git", branch: "master"
+    depends_on "go" => :build
+  end
 
   # Default: use pre-built binary
   on_macos do
@@ -26,13 +29,6 @@ class MysqlBackup < Formula
       url "https://github.com/databacker/mysql-backup/releases/download/v1.3.0/mysql-backup-linux-amd64"
       sha256 "c281bd060d7ff40ca4f2e137bcd4e3ad289a4b3adf8f9fc0e5bf04b8746e5461"
     end
-  end
-
-
-  # HEAD: build from source
-  head do
-    url "https://github.com/databacker/mysql-backup.git", branch: "master"
-    depends_on "go" => :build
   end
 
   def install
