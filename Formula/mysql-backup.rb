@@ -1,7 +1,7 @@
 class MysqlBackup < Formula
   desc "Automated backups of mysql databases"
   homepage "https://github.com/databacker/mysql-backup"
-  license "Apache 2.0"
+  license "Apache-2.0"
 
   # HEAD: build from source
   head do
